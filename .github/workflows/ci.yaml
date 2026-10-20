@@ -1,3 +1,14 @@
+name: Flask Docker CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -6,16 +17,16 @@ jobs:
       - name: Pobierz kod
         uses: actions/checkout@v4
 
-      - name: zainstaluj Python 
+      - name: Zainstaluj Python
         uses: actions/setup-python@v5
         with:
-        python-version: '3.12'
+          python-version: '3.12'
 
-      - name: zainstaluj biblioteki
-        run:pip install -r requirements.txt
+      - name: Zainstaluj biblioteki
+        run: pip install -r requirements.txt
 
       - name: Uruchom testy
-        run: python -m unitest discover -s tests -v
+        run: python -m unittest discover -s tests -v
 
       - name: Zbuduj obraz Docker
-        run: docker build -t devops-nauka:ci . 
+        run: docker build -t devops-nauka:ci .
