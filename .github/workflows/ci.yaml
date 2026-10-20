@@ -43,10 +43,10 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: $ {{secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: opublikuj obraz Docker
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run:  
+        run: | 
           docker tag devops-nauka:ci "${{ steps.image.outputs.name }}"
           docker push "${{ steps.image.outputs.name }}"
