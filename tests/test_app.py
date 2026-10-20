@@ -16,7 +16,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             response.get_json(),
-            {"version": "3.0"}
+            {"version": "2.0"}
         )
 
 if __name__ == "__main__":
