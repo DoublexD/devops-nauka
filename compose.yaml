@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    image: test:2.0
+    container_name: nauka
+    ports:
+      - "5000:5000"
