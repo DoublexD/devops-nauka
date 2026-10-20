@@ -49,4 +49,4 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run:  
           docker tag devops-nauka:ci "${{ steps.image.outputs.name }}"
-        docker push "${{ steps.image.outputs.name }}"
+          docker push "${{ steps.image.outputs.name }}"
