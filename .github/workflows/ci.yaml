@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  packages: write
 
 jobs:
   build-and-test:
@@ -30,3 +31,22 @@ jobs:
 
       - name: Zbuduj obraz Docker
         run: docker build -t devops-nauka:ci .
+      
+      - name: przygotuj nazwe obrazu
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        id: image
+        run: echo "name=ghcr.io/${GITHUB_REPOSITORY,,}:3.0" >> "$GITHUB_OUTPUT"
+
+      - name: zalgouj do ghcr
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: $ {{secrets.GITHUB_TOKEN }}
+
+      - name: opublikuj obraz Docker
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run:  
+          docker tag devops-nauka:ci "${{ steps.image.outputs.name }}"
+        docker push "${{ steps.image.outputs.name }}"
